@@ -1,0 +1,31 @@
+/*————————————————————————————————————————
+
+- DSGNR Buttons aspect
+
+If you don't know what you are doing,
+please do not change anything here !
+
+————————————————————————————————————————*/
+.btn {
+	border-radius: 0;
+	background: $dsgnr-black-color;
+	color: $dsgnr-white-color;
+	border: 1px solid $dsgnr-black-color;
+	@include transition(all $transition-duration);
+
+	&:hover {
+		background-color: transparent;
+		color: $dsgnr-black-color;
+	}
+
+	&.btn-primary-outline {
+		background: transparent;
+		border: 1px solid $dsgnr-primary-color;
+		&:hover {color: $dsgnr-primary-color;}
+	}
+
+	&.btn-black-outline {
+		background: transparent;
+		border-color: $dsgnr-black-color;
+	}
+}

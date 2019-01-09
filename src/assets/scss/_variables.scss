@@ -1,0 +1,42 @@
+/*————————————————————————————————————————
+
+- DSGNR Global variables
+
+If you don't know what you are doing,
+please do not change anything here !
+
+————————————————————————————————————————*/
+$dsgnr-primary-color: #FF4365;
+$dsgnr-secondary-color: #92DCE5;
+$dsgnr-dark-color: #2D3142;
+$dsgnr-medium-color: #CECECE;
+$dsgnr-light-color: #EFEFEF;
+$dsgnr-black-color: #000000;
+$dsgnr-white-color: #FFFFFF;
+
+
+/*
+** Transition
+*/
+$transition-duration: 0.2s;
+$transition-md-duration: .4s;
+$transition-lg-duration: .6s;
+$transition-xl-duration: 1.4s;
+$transition-property: ease;
+
+
+/*
+** Fonts Size and family
+*/
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+
+$primary-font-family: 'Avenir Next', 'Helvetica', 'Arial', sans-serif;
+$secondary-font-family: 'Playfair Display', sans-serif;
+
+$dsgnr-default-font-size: 18px;
+$dsgnr-xs-font-size: 13px;
+$dsgnr-sm-font-size: 16px;
+$dsgnr-lg-font-size: 20px;
+
+$h1-font-size: 84px;
+$h1-xs-font-size: 60px;

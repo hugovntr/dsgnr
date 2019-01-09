@@ -1,0 +1,51 @@
+<template>
+	<div class="home">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4" v-for="item in items">
+					<div class="card h-100">
+						<img :src="item.url" alt="" style="height: 200px; object-fit: cover;" class="car-img-top img-fluid">
+						<div class="card-body d-flex flex-column justify-content-between">
+							<p class="secondary-font">{{ item.title }}</p>
+							<div class="mb-2">{{ item.description | stripHTML | truncate(30) }}</div>
+							<router-link class="btn" :to="{name: 'adminEditPost', params: {slug: item.slug}}">Edit Project</router-link>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<router-view/>
+			</div>
+
+			<!-- <div class="row">
+				<editor :item="toSend"/>
+			</div> -->
+
+		</div>
+	</div>
+</template>
+
+<script>
+import Editor from '@/components/assets/Editor'
+
+export default {
+  name: 'index',
+  components: {
+	Editor,
+  },
+  data() {
+	return {
+		items: [],
+	  toSend: null
+	}
+  },
+  created() {
+	this.$http.get(this.$config.ENDPOINTS.portfolio._getImages)
+	.then(res => {
+		this.items = res.data;
+	})
+	.catch(err => console.log('Request failed', err));
+  }
+}
+</script>

@@ -1,0 +1,12 @@
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+@mixin column-count($count) {
+	-moz-column-count: $count;
+	-webkit-column-count: $count;
+	column-count: $count;
+}
