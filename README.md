@@ -1,5 +1,7 @@
 # DSGNR
 
+! IT DOES NOT WORK !
+
 ## Project setup
 ```
 yarn install
