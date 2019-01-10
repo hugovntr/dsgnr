@@ -1,5 +1,5 @@
 function getConfig() {
-	this.API_LOCATION = 'http://192.168.0.101/dsgnr/api/v1/',
+	this.API_LOCATION = 'http://127.0.0.1/dsgnr/api/v1/',
 	this.ENDPOINTS = {
 		portfolio: {
 			_getImages: this.API_LOCATION + 'images',

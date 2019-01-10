@@ -23,7 +23,7 @@
 			position: absolute;
 			content: "";
 			top: 0; right: 0; bottom: 0; left: 0;
-			background: url('https://images.unsplash.com/photo-1459695452562-46cc57bef5f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=max&q=100') center fixed;
+			background: url('https://images.unsplash.com/photo-1459695452562-46cc57bef5f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1080&q=75') center fixed;
 			background-size: cover;
 			z-index: -1;
 		}
