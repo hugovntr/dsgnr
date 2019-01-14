@@ -1,6 +1,6 @@
 <template>
-	<div id="portfolio">
-		<div class="container" v-if="title">
+	<section id="portfolio">
+		<div class="container heading" v-if="title">
 			<h1>Portfolio</h1>
 			<p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat vero corporis modi <a href="#">laudantium</a> eveniet facilis incidunt expedita blanditiis mollitia, animi explicabo autem omnis repellat dolorem quaerat, dicta labore repellendus. Repellendus!</p>
 		</div>
@@ -9,7 +9,7 @@
 			<div class="row">
 				<div class="card-columns">
 					<div class="card p-0 m-0" v-for="item in items">
-						<div class="card-body p-0">
+						<div class="card-body m-0 p-0">
 							<div class="card-img">
 								<div class="overlay p-4 d-flex justify-content-center align-items-center">
 									<div class="w-100 d-flex justify-content-center flex-column">
@@ -19,19 +19,25 @@
 										</div>
 									</div>
 								</div>
-								<img :src="item.url" alt="" class="img-fluid"/>
+								<!-- <img :src="item.url" alt="" class="img-fluid"/> -->
+								<DSGNRImage :key="item.url" :lazy-src="item.url" />
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>
+	import DSGNRImage from '@/components/assets/Image'
+
 	export default {
 		name: "Portfolio",
+		components: {
+			DSGNRImage
+		},
 		props: {
 			title: {type: Boolean, default: true}
 		},
@@ -41,9 +47,9 @@
 			}
 		},
 		mounted() {
-			this.$http.get(this.$config.ENDPOINTS.portfolio._getImages)
+			this.$http.get(this.$config.api._getImages.url)
 			.then(res => {
-				this.items = res.data;
+				this.items = res.data.data;
 			})
 			.catch(err => console.log('Request failed', err));
 		}
@@ -54,11 +60,13 @@
 	.card-columns {
 		@include column-count(4);
 		column-gap: 0;
+		line-height: 0;
 		@include breakpoint(xs) {@include column-count(1);}
 		@include breakpoint(sm) {@include column-count(2);}
 		@include breakpoint(md) {@include column-count(3);}
 		@include breakpoint(lg) {@include column-count(3);}
 		.card {
+			display: inline-block;
 			border: none;
 			.card-img {
 				position: relative;
@@ -67,14 +75,18 @@
 				.overlay {
 					background-color: rgba($dsgnr-black-color, .8);
 					color: $dsgnr-white-color;
+					z-index: -3;
 					position: absolute;
 					height: 100%;
 					max-width: 100%;
 					left: -200%;
-					@include transition(left $transition-md-duration);
+					@include transition(left $transition-md-duration, z-index $transition-lg-duration);
 				}
 				&:hover {
-					.overlay{left:0;}
+					.overlay{
+						left:0;
+						z-index: 2;
+					}
 				}
 			}
 		}

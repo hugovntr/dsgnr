@@ -12,11 +12,11 @@
 					<div class="d-flex flex-column flex-sm-column flex-md-column flex-lg-row">
 						<h1 class="d-flex d-lg-none">{{project.title}}</h1>
 						<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 px-0">
-							<img :src="project.url" alt="" class="img-fluid">
+							<DSGNRImage :key="project.url" :lazy-src="project.url" v-if="project.url" />
 						</div>
 						<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-6 px-0 px-lg-3">
 							<h1 class="d-none d-lg-flex">{{project.title}}</h1>
-							<div class="description" v-html="project.description">{{project.description}}</div>
+							<div class="description" v-html="project.content">{{project.content}}</div>
 						</div>
 					</div>
 				</div>
@@ -44,11 +44,13 @@
 
 <script>
 	import Topbar from '@/components/Topbar';
+	import DSGNRImage from '@/components/assets/Image'
 
 	export default {
 		name: 'Project',
 		components: {
-			Topbar
+			Topbar,
+			DSGNRImage,
 		},
 		watch: {
 			'$route'(to, from) {
@@ -82,14 +84,14 @@
 		},
 		methods: {
 			getProject() {
-				this.$http.get(this.$config.ENDPOINTS.portfolio._getImage(this.slug))
+				this.$http.get(this.$config.api._getImage(this.slug).url)
 				.then(res => {
-					this.project = res.data[0];
+					this.project = res.data.data;
 				})
 				.catch(err => console.log('Request failed', err));
 			},
 			getSlugList() {
-				this.$http.get(this.$config.ENDPOINTS.portfolio._getSlugs)
+				this.$http.get(this.$config.api._getSlugs.url)
 				.then(res => {
 					this.slugList = res.data;
 					this.controls.next.slug = this.slugList[this.slugList.indexOf(this.slug) + 1];
@@ -100,7 +102,7 @@
 				.catch(err => console.log('Slug List Request Failed', err));
 			},
 			checkProject(_slug, _ctrl) {
-				fetch(this.$config.ENDPOINTS.portfolio._getImage(_slug))
+				fetch(this.$config.api._getImage(_slug).url)
 				.then(res => {
 					if (_ctrl === "next")
 						this.controls.next.status = res.ok;
@@ -114,14 +116,13 @@
 					return res.json();
 				})
 				.then(res => {
-					console.log(res);
 					if (_ctrl === "next" && this.controls.next.status) {
-						this.controls.next.title = res[0].title;
-						this.controls.next.slug = res[0].slug;
+						this.controls.next.title = res.data.title;
+						this.controls.next.slug = res.data.slug;
 					}
 					if (_ctrl === "prev" && this.controls.prev.status) {
-						this.controls.prev.title = res[0].title;
-						this.controls.prev.slug = res[0].slug;
+						this.controls.prev.title = res.data.title;
+						this.controls.prev.slug = res.data.slug;
 					}
 				})
 				.catch(err => console.log('Request failed:', err));
@@ -133,7 +134,11 @@
 			}
 		},
 		mounted() {
-			this.getProject();
+			this.$http.get(this.$config.api._getImage(this.slug).url)
+			.then(res => {
+				this.project = res.data.data;
+			})
+			.catch(err => console.log('Request failed', err));
 			this.getSlugList();
 		}
 	}

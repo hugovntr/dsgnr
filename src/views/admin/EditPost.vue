@@ -37,23 +37,26 @@
 		},
 		methods: {
 			getProject() {
-				this.$http.get(this.$config.ENDPOINTS.portfolio._getImage(this.slug))
+				this.$http.get(this.$config.api._getImage(this.slug).url)
 				.then(res => {
-					this.post = res.data[0];
+					this.post = res.data.data;
 				})
 				.catch(err => console.log('Request failed', err));
 			},
 			submit() {
 				let params = new URLSearchParams();
 				params.append('title', this.post.title);
-				params.append('description', this.post.description);
+				params.append('content', this.post.content);
+				params.append('_method', this.$config.api._editImage(this.slug).method);
 
-				this.$http.post(this.$config.ENDPOINTS.portfolio._editImage(this.slug), params)
-				.then ((res) => console.log(res))
+				this.$http.post(this.$config.api._editImage(this.slug).url, params)
+				.then ((res) => {
+					this.$router.push({name: 'adminEditPost', params: {slug: res.data.data.slug}})
+				})
 				.catch((err) => console.log(err));
 			},
 			onEditorUpdate(value) {
-				this.post.description = value;
+				this.post.content = value;
 			}
 		},
 		created() {

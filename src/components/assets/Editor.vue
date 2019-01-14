@@ -8,7 +8,7 @@
           :class="{ 'is-active': isActive.bold() }"
           @click="commands.bold"
         >
-          Bold
+          <i class="fas fa-bold"></i>
         </button>
 
         <button
@@ -16,7 +16,7 @@
           :class="{ 'is-active': isActive.italic() }"
           @click="commands.italic"
         >
-          Italic
+          <i class="fas fa-italic"></i>
         </button>
 
         <button
@@ -24,7 +24,7 @@
           :class="{ 'is-active': isActive.strike() }"
           @click="commands.strike"
         >
-          Stike
+          <i class="fas fa-strikethrough"></i>
         </button>
 
         <button
@@ -32,7 +32,7 @@
           :class="{ 'is-active': isActive.underline() }"
           @click="commands.underline"
         >
-          U
+          <i class="fas fa-underline"></i>
         </button>
 
         <button
@@ -48,7 +48,7 @@
           :class="{ 'is-active': isActive.paragraph() }"
           @click="commands.paragraph"
         >
-          p
+          <i class="fas fa-paragraph"></i>
         </button>
 
         <button
@@ -56,7 +56,7 @@
           :class="{ 'is-active': isActive.heading({ level: 1 }) }"
           @click="commands.heading({ level: 1 })"
         >
-          H1
+          <strong>H1</strong>
         </button>
 
         <button
@@ -64,7 +64,7 @@
           :class="{ 'is-active': isActive.heading({ level: 2 }) }"
           @click="commands.heading({ level: 2 })"
         >
-          H2
+          <strong>H2</strong>
         </button>
 
         <button
@@ -72,7 +72,7 @@
           :class="{ 'is-active': isActive.heading({ level: 3 }) }"
           @click="commands.heading({ level: 3 })"
         >
-          H3
+          <strong>H3</strong>
         </button>
 
         <button
@@ -80,7 +80,7 @@
           :class="{ 'is-active': isActive.bullet_list() }"
           @click="commands.bullet_list"
         >
-          ul
+          <i class="fas fa-list-ul"></i>
         </button>
 
         <button
@@ -88,7 +88,7 @@
           :class="{ 'is-active': isActive.ordered_list() }"
           @click="commands.ordered_list"
         >
-          ol
+          <i class="fas fa-list-ol"></i>
         </button>
 
         <button
@@ -96,7 +96,7 @@
           :class="{ 'is-active': isActive.blockquote() }"
           @click="commands.blockquote"
         >
-          ""
+          <i class="fas fa-quote-left"></i>
         </button>
 
         <button
@@ -104,21 +104,21 @@
           :class="{ 'is-active': isActive.code_block() }"
           @click="commands.code_block"
         >
-          </>
+          <i class="fas fa-code"></i>
         </button>
 
         <button
           class="menubar__button"
           @click="commands.undo"
         >
-          Undo
+          <i class="fas fa-undo"></i>
         </button>
 
         <button
           class="menubar__button"
           @click="commands.redo"
         >
-          Redo
+          <i class="fas fa-redo"></i>
         </button>
 
       </div>
@@ -161,7 +161,7 @@ export default {
   watch: {
     'item'() {
       //console.log(this.item.description);
-      this.editor.setContent(this.item.description);
+      this.editor.setContent(this.item.content);
       this.editor.focus();
     }
   },
@@ -186,7 +186,7 @@ export default {
           new Underline(),
           new History(),
         ],
-        content: this.item.description,
+        content: this.item.content,
         onUpdate: ({getHTML}) => {
           this.html = getHTML();
           this.$emit('updated', this.html);

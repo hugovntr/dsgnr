@@ -2,12 +2,12 @@
 	<div class="home">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4" v-for="item in items">
+				<div class="col-sm-4 my-2" v-for="item in items">
 					<div class="card h-100">
-						<img :src="item.url" alt="" style="height: 200px; object-fit: cover;" class="car-img-top img-fluid">
+						<img :src="item.url" alt="" style="height: 200px; object-fit: cover;" class="card-img-top img-fluid">
 						<div class="card-body d-flex flex-column justify-content-between">
 							<p class="secondary-font">{{ item.title }}</p>
-							<div class="mb-2">{{ item.description | stripHTML | truncate(30) }}</div>
+							<div class="mb-2">{{ item.content | stripHTML | truncate(30) }}</div>
 							<router-link class="btn" :to="{name: 'adminEditPost', params: {slug: item.slug}}">Edit Project</router-link>
 						</div>
 					</div>
@@ -41,9 +41,9 @@ export default {
 	}
   },
   created() {
-	this.$http.get(this.$config.ENDPOINTS.portfolio._getImages)
+	this.$http.get(this.$config.api._getImages.url)
 	.then(res => {
-		this.items = res.data;
+		this.items = res.data.data;
 	})
 	.catch(err => console.log('Request failed', err));
   }

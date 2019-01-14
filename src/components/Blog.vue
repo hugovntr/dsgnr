@@ -1,5 +1,5 @@
 <template>
-	<div id="blog">
+	<section id="blog">
 		<div class="container" v-if="title">
 			<h1>Blog</h1>
 			<p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat vero corporis modi <a href="#">laudantium</a> eveniet facilis incidunt expedita blanditiis mollitia, animi explicabo autem omnis repellat dolorem quaerat, dicta labore repellendus. Repellendus!</p>
@@ -10,7 +10,7 @@
 				
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>
