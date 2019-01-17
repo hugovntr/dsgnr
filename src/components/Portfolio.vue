@@ -20,7 +20,7 @@
 									</div>
 								</div>
 								<!-- <img :src="item.url" alt="" class="img-fluid"/> -->
-								<DSGNRImage :key="item.url" :lazy-src="item.url" />
+								<DSGNRImage :key="item.url" :lazy-src="item.url | resize(500)" />
 							</div>
 						</div>
 					</div>

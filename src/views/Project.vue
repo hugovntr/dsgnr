@@ -12,7 +12,7 @@
 					<div class="d-flex flex-column flex-sm-column flex-md-column flex-lg-row">
 						<h1 class="d-flex d-lg-none">{{project.title}}</h1>
 						<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 px-0">
-							<DSGNRImage :key="project.url" :lazy-src="project.url" v-if="project.url" />
+							<DSGNRImage :key="project.url" :lazy-src="project.url | resize(800)" v-if="project.url" />
 						</div>
 						<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-6 px-0 px-lg-3">
 							<h1 class="d-none d-lg-flex">{{project.title}}</h1>

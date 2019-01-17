@@ -38,6 +38,13 @@ Vue.filter('truncate', function (text, length, clamp) {
 
 	return tcText + clamp;
 });
+
+Vue.filter('resize', function(value, size) {
+	let url = value || '';
+	size = size || 'default';
+	return url + '/' + size;
+});
+
 new Vue({
   router,
   store,

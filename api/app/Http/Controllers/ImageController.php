@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
 use App\Image;
 use App\Http\Resources\Image as ImageResource;
 
@@ -67,9 +68,25 @@ class ImageController extends Controller
     {
         $image = Image::where('slug', $slug)->firstorfail();
 
-        $image->title = $request->input('title') ? $request->input('title') : $image->title;
-        $image->url = $request->input('url') ? $request->input('url') : $image->url;
-        $image->content = $request->input('content') ? $request->input('content') : $image->content;
+        if ($request->hasFile('media')) {
+            $validator = Validator::make($request->all(), [
+                'media' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            if ($validator->fails()) {
+                return ;
+            }
+            
+            $url = Image::store($request->file('media'));
+        }
+        else {
+            $url = $image->url;
+        }
+
+
+        $image->title = $request->input('title') ?? $image->title;
+        $image->content = $request->input('content') ?? $image->content;
+        $image->url = $url;
         $image->slug = $request->input('title') ? str_slug($request->input('title'), '-') : $image->slug;
         if ($image->save()) {
             return new ImageResource($image);

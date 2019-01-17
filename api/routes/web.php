@@ -29,3 +29,36 @@ Route::prefix('v1')->group(function() {
 	Route::apiResource('images', 'ImageController')->middleware('cors');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Images Getters
+|--------------------------------------------------------------------------
+*/
+Route::get('/images/{name}/{size?}', function($name, $size = 'default') {
+	$regex = '/^([1-9]+([0-9]+)?[x]{0,1}([1-9]+([0-9]+)?)?)$/';
+
+	if ($size !== "default" && preg_match($regex, $size) == 0) {
+		$size = "default";
+	}
+	
+	$img = Img::make(Storage::disk('public')->get('images/' . $name));
+    $mime = Storage::disk('public')->getMimetype('images/' . $name);
+
+
+	if ($size === "default") {
+		return $img->response($mime);
+	}
+	else {
+		$size = explode('x', $size);
+		$width = $size[0];
+		$height = $size[1] ?? false;
+
+		if (!$height) $height = $width;
+
+		return $img->resize($width, $height, function($constraint) {
+			$constraint->aspectRatio();
+			$constraint->upsize();
+		})->response($mime);
+	}
+
+});

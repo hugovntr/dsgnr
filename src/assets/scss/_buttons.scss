@@ -14,8 +14,18 @@ please do not change anything here !
 	@include transition(all $transition-duration);
 
 	&:hover {
+		cursor: pointer;
 		background-color: transparent;
 		color: $dsgnr-black-color;
+	}
+
+	&.btn-secondary {
+		background-color: $dsgnr-secondary-color;
+		border-color: $dsgnr-secondary-color;
+		&:hover {
+			background-color: transparent;
+			color: $dsgnr-secondary-color;
+		}
 	}
 
 	&.btn-primary-outline {

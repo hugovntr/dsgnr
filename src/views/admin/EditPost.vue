@@ -1,18 +1,38 @@
 <template>
 	<div id="edit" class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-6">
-				<img :src="post.url" alt="" class="img-fluid">
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<img :src="thumbnail" alt="" class="img-fluid">
+				
+				<div class="pt-3">
+					<label class="label-file d-flex justify-content-between align-items-center">
+						<span v-if="mediaToPost">{{ mediaToPost.name }}</span>
+						<span v-else>Choose a file...</span>
+						<span class="btn">Browse</span>
+						<input type="file" ref="file" name="file" v-on:change="onFileChange" class="d-none"/>
+					</label>
+				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6">
-				<input type="text" class="secondary-font" v-model="post.title"/>
-				<editor :item="post" @updated="onEditorUpdate"/>
-
-				<button class="btn" @click="submit">Save</button>
+			<div class="col-xs-12 col-sm-8 col-md-8">
+				<div class="form">
+					<input type="text" class="secondary-font" v-model="post.title"/>
+					<editor :item="post" @updated="onEditorUpdate"/>
+				</div>
+				
+				<div class="controls d-flex justify-content-end">
+					
+					<button class="btn btn-secondary" @click="submit">Save</button>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+	.label-file {
+		cursor: pointer;
+	}
+</style>
 
 <script>
 
@@ -33,6 +53,8 @@
 			return {
 				slug: this.$route.params.slug,
 				post: {},
+				thumbnail: '',
+				mediaToPost: ''
 			}
 		},
 		methods: {
@@ -40,18 +62,40 @@
 				this.$http.get(this.$config.api._getImage(this.slug).url)
 				.then(res => {
 					this.post = res.data.data;
+					this.thumbnail = this.post.url;
 				})
 				.catch(err => console.log('Request failed', err));
 			},
-			submit() {
-				let params = new URLSearchParams();
-				params.append('title', this.post.title);
-				params.append('content', this.post.content);
-				params.append('_method', this.$config.api._editImage(this.slug).method);
+			onFileChange(e) {
+				
+				this.mediaToPost = this.$refs.file.files[0];
 
-				this.$http.post(this.$config.api._editImage(this.slug).url, params)
+				let files = e.target.files || e.dataTransfer.files;
+				if (!files.length) return ;
+				this.createImage(files[0]);
+			},
+			createImage(file) {
+				let reader = new FileReader();
+				let vm = this;
+				reader.onload = (e) => {
+					vm.thumbnail = e.target.result;
+				};
+				reader.readAsDataURL(file);
+			},
+			submit() {
+				let data = new FormData();
+				data.append('title', this.post.title);
+				data.append('content', this.post.content);
+				data.append('_method', this.$config.api._editImage(this.slug).method);
+				data.append('media', this.mediaToPost);
+
+				this.$http.post(this.$config.api._editImage(this.slug).url, data, {
+	                headers: {
+	                    'Content-Type': 'multipart/form-data'
+	                }
+				})
 				.then ((res) => {
-					this.$router.push({name: 'adminEditPost', params: {slug: res.data.data.slug}})
+					this.$router.push({name: 'adminEditPost', params: {slug: res.data.data.slug}});
 				})
 				.catch((err) => console.log(err));
 			},
