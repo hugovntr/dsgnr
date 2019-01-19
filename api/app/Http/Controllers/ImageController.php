@@ -68,15 +68,15 @@ class ImageController extends Controller
     {
         $image = Image::where('slug', $slug)->firstorfail();
 
+
         if ($request->hasFile('media')) {
             $validator = Validator::make($request->all(), [
-                'media' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'media' => 'image|mimes:jpeg,png,jpg,gif,svg'
             ]);
 
             if ($validator->fails()) {
-                return ;
+                return response()->json(['FAILED'], 500);
             }
-            
             $url = Image::store($request->file('media'));
         }
         else {

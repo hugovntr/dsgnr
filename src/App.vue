@@ -2,6 +2,7 @@
   <div id="app">
     <Navbar :absolute="isHeader"/>
     <router-view/>
+    <Flash/>
     <Footer/>
   </div>
 </template>
@@ -19,11 +20,14 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+import Flash from '@/components/assets/Flash'
+
 export default {
   name: 'app',
   components: {
     Navbar,
-    Footer
+    Footer,
+    Flash
   },
   computed: {
     isHeader: function() {

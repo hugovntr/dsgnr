@@ -1,5 +1,5 @@
 <template>
-	<div id="project">
+	<div id="project" @keyup.esc="console.log('left')">
 		<div class="container-fluid">
 			<Topbar :isAuthor="false" name="Hugo" date="13/12/2019"/>
 			<div class="row px-3 px-sm-0">
@@ -88,7 +88,10 @@
 				.then(res => {
 					this.project = res.data.data;
 				})
-				.catch(err => console.log('Request failed', err));
+				.catch(err => {
+					console.log('Request failed', err)
+					flash("An error occured while retreiving project informations", "error");
+				});
 			},
 			getSlugList() {
 				this.$http.get(this.$config.api._getSlugs.url)
@@ -140,6 +143,18 @@
 			})
 			.catch(err => console.log('Request failed', err));
 			this.getSlugList();
+
+			document.onkeydown = evt => {
+		      evt = evt || window.event;
+		      if (evt.keyCode == 37) {
+		        this.$router.push({name: 'project', params: {slug: this.controls.prev.slug}});
+		      }
+		      if (evt.keyCode == 39) {
+		      	this.$router.push({name: 'project', params: {slug: this.controls.next.slug}});
+		      }
+
+		      if (evt.keyCode == 76) { flash('You\'ve liked this project', 'like'); }
+		    };
 		}
 	}
 </script>

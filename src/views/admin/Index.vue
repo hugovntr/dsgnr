@@ -4,7 +4,7 @@
 			<div class="row">
 				<div class="col-sm-4 my-2" v-for="item in items">
 					<div class="card h-100">
-						<img :src="item.url" alt="" style="height: 200px; object-fit: cover;" class="card-img-top img-fluid">
+						<img :src="item.url | resize(300)" alt="" style="height: 200px; object-fit: cover;" class="card-img-top img-fluid">
 						<div class="card-body d-flex flex-column justify-content-between">
 							<p class="secondary-font">{{ item.title }}</p>
 							<div class="mb-2">{{ item.content | stripHTML | truncate(30) }}</div>

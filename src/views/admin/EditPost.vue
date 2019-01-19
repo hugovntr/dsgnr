@@ -2,6 +2,7 @@
 	<div id="edit" class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-4 col-md-4">
+				<label for="thumbnail"><strong>Image</strong></label>
 				<img :src="thumbnail" alt="" class="img-fluid">
 				
 				<div class="pt-3">
@@ -14,9 +15,15 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-8 col-md-8">
-				<div class="form">
-					<input type="text" class="secondary-font" v-model="post.title"/>
-					<editor :item="post" @updated="onEditorUpdate"/>
+				<div class="form d-flex flex-column">
+					<div class="title d-flex flex-column mb-3 pb-3">
+						<label for="title"><strong>Title</strong></label>
+						<input type="text" class="secondary-font dark-color input-text h1-xs-font-size" placeholder="Enter a title..." v-model="post.title"/>
+					</div>
+					<div class="description d-flex flex-column py-3 mt-3">
+						<label for="description"><strong>Description</strong></label>
+						<editor id="desc" :item="post" @updated="onEditorUpdate"/>
+					</div>
 				</div>
 				
 				<div class="controls d-flex justify-content-end">
@@ -35,7 +42,6 @@
 </style>
 
 <script>
-
 	import Editor from '@/components/assets/Editor'
 
 	export default {
@@ -95,9 +101,13 @@
 	                }
 				})
 				.then ((res) => {
+					flash("Project saved succesfuly", "success");
 					this.$router.push({name: 'adminEditPost', params: {slug: res.data.data.slug}});
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => {
+					flash("An unknown error occured, please try again later", "error");
+					console.log(err)
+				});
 			},
 			onEditorUpdate(value) {
 				this.post.content = value;

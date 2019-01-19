@@ -26,6 +26,9 @@ h1 {
 .sm-font-size {font-size: $dsgnr-sm-font-size;}
 .lg-font-size {font-size: $dsgnr-lg-font-size;}
 
+.h1-font-size {font-size: $h1-font-size;}
+.h1-xs-font-size {font-size: $h1-xs-font-size;}
+
 //- Color classes for easy access
 .black-color {color: $dsgnr-black-color;}
 .white-color {color: $dsgnr-white-color;}
@@ -79,4 +82,12 @@ a {
 			text-decoration: none;
 		}
 	}
+}
+
+input.input-text {
+	border: none;
+	border-bottom: 1px solid $dsgnr-light-color;
+	@include transition(border-color $transition-duration $transition-property);
+	outline: none;
+	&:focus { border-color: $dsgnr-dark-color; }
 }

@@ -22,8 +22,7 @@ Route::get('/', function () {
 Route::prefix('v1')->group(function() {
 	
 	Route::get('hello', function() {
-		$title="Jle oifdjez p";
-		return str_slug($title, '-');
+		echo phpinfo();
 	});
 
 	Route::apiResource('images', 'ImageController')->middleware('cors');

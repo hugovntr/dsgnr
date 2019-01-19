@@ -1,0 +1,43 @@
+/*————————————————————————————————————————
+
+- DSGNR Flash messages
+
+If you don't know what you are doing,
+please do not change anything here !
+
+————————————————————————————————————————*/
+
+.alert{
+	padding: 0;
+	background-color: $dsgnr-white-color;
+	border:none;
+	box-shadow: 0 1px 3px rgba($dsgnr-black-color, .1);
+	border-left: 3px solid;
+	border-radius: 0px;
+
+	&-danger { border-color: #d63031; }
+	&-warning { border-color: #fdcb6e; }
+	&-success { border-color: #00b894; }
+	&-info { border-color: #0984e3; }
+	&-like { border-color: #e84393; }
+
+	.icon {
+		font-size: 2rem;
+		color: $dsgnr-medium-color;
+	}
+
+	.content {
+		.message {
+			font-size: .8rem;
+			color: $dsgnr-dark-color;
+		}
+	}
+
+	.closable {
+		font-size: .8rem;
+		color: $dsgnr-light-color;
+		cursor: pointer; 
+		@include transition(color $transition-duration $transition-property);
+		&:hover {color: $dsgnr-medium-color;}
+	}
+}

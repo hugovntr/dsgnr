@@ -11,6 +11,11 @@ Vue.config.productionTip = false
 Vue.prototype.$config = config.getConfig();
 Vue.prototype.$http = axios;
 
+window.events = new Vue();
+window.flash = function(message, type) {
+	window.events.$emit('flash', message, type);
+};
+
 // Temporary Filter location
 Vue.filter('stripHTML', function(value) {
 	var div = document.createElement('div');

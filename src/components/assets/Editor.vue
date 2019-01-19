@@ -135,14 +135,6 @@
 
         <button
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          @click="commands.heading({ level: 1 })"
-        >
-          <strong>H1</strong>
-        </button>
-
-        <button
-          class="menubar__button"
           :class="{ 'is-active': isActive.heading({ level: 2 }) }"
           @click="commands.heading({ level: 2 })"
         >
@@ -155,6 +147,14 @@
           @click="commands.heading({ level: 3 })"
         >
           <strong>H3</strong>
+        </button>
+
+        <button
+          class="menubar__button"
+          :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+          @click="commands.heading({ level: 4 })"
+        >
+          <strong>H4</strong>
         </button>
 
         <button
@@ -305,7 +305,7 @@ export default {
 					new BulletList(),
 					new CodeBlock(),
 					new HardBreak(),
-					new Heading({ levels: [1, 2, 3] }),
+					new Heading({ levels: [2, 3, 4] }),
 					new ListItem(),
 					new OrderedList(),
 					new TodoItem(),
@@ -377,6 +377,8 @@ export default {
   position: relative;
   padding: .6rem 0rem;
   border-bottom: 1px solid $dsgnr-light-color;
+  @include transition(border-color $transition-duration $transition-property);
+  &:focus {border-color: $dsgnr-dark-color;}
   margin-bottom: 1.2rem;
 
   &__floating-menu {
