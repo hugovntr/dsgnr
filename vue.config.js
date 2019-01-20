@@ -1,3 +1,9 @@
+const devServer = {
+	host: 'dsgnr.lab',
+	port: 8080,
+	https: false
+};
+
 module.exports = {
 	css: {
 		loaderOptions: {
@@ -5,5 +11,6 @@ module.exports = {
 				data: '@import "@/assets/scss/dsgnr.scss";'
 			}
 		}
-	}
+	},
+	devServer: (process.env.NODE_ENV === "staging") ? devServer : {},
 };

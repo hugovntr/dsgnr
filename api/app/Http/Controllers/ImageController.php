@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Validator;
 use App\Image;
+use Validator;
+use Illuminate\Http\Request;
 use App\Http\Resources\Image as ImageResource;
 
 class ImageController extends Controller

@@ -7,6 +7,12 @@ use Illuminate\Http\UploadedFile;
 
 class Image extends Model
 {
+	/**
+	 * Store image in storage folder
+	 *
+	 * @param UploadedFile $media
+	 * @return void
+	 */
 	static function store(UploadedFile $media)
 	{
 		$name = $media->getClientOriginalName();
