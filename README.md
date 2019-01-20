@@ -1,6 +1,6 @@
 # DSGNR
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://github.com/BLVCKLNGS/dsgnr/blob/master/LICENSE)
 
 __Keep in mind:__ This is a development version, which mean it is not safe to use on a production environnement.
 
