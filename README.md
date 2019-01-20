@@ -12,7 +12,7 @@ Install laravel dependencies
 ```cd api && composer install && cd ../```
 
 Create the laravel .env file
-```cd api && cp .env.example .env````
+```cd api && cp .env.example .env```
 
 Then you will need to edit the newly create .env file
 
