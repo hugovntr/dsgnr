@@ -10,7 +10,7 @@ However, if you still want to install it in *local* to check it out and have a l
 ## Basic setup
 * Install laravel dependencies `cd api && composer install && cd ../`
 * Create the laravel .env file `cd api && cp .env.example .env`
-* You will need to [Setup your environment file](https://github/com/BLVCKLNGS/dsgnr#api-environment)
+* You will need to [Setup your environment file](https://github.com/BLVCKLNGS/dsgnr#api-environment)
 * Install npm dependencies `yarn install`
 * Launch the local server `yarn run serve` or `yarn serve`
 
