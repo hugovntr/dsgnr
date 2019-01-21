@@ -147,10 +147,12 @@
 			document.onkeydown = evt => {
 		      evt = evt || window.event;
 		      if (evt.keyCode == 37) {
-		        this.$router.push({name: 'project', params: {slug: this.controls.prev.slug}});
+				  if (this.controls.prev.slug)
+		        	this.$router.push({name: 'project', params: {slug: this.controls.prev.slug}});
 		      }
 		      if (evt.keyCode == 39) {
-		      	this.$router.push({name: 'project', params: {slug: this.controls.next.slug}});
+				  if (this.controls.next.slug)
+		      		this.$router.push({name: 'project', params: {slug: this.controls.next.slug}});
 		      }
 
 		      if (evt.keyCode == 76) { flash('You\'ve liked this project', 'like'); }

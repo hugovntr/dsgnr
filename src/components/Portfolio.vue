@@ -19,11 +19,16 @@
 										</div>
 									</div>
 								</div>
-								<!-- <img :src="item.url" alt="" class="img-fluid"/> -->
 								<DSGNRImage :key="item.url" :lazy-src="item.url | resize(500)" />
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="d-flex w-100 py-4 my-4 justify-content-center">
+					<router-link :to="{name: 'portfolio'}" class="btn btn-dark-outline">See more</router-link>
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 
 Vue.use(Router)
 
+
 export default new Router({
   routes: [
     {
@@ -15,13 +16,6 @@ export default new Router({
       path: '/admin',
       name: 'admin',
       component: () => import(/* webpackChunkName: "admin" */ './views/admin/Index.vue'),
-      // children: [
-      //   {
-      //     path: 'edit/:slug',
-      //     name: 'adminEditPost',
-      //     component: () => import('./views/admin/EditPost.vue')
-      //   }
-      // ]
     },
     {
       path: '/admin/edit/:slug',
@@ -40,6 +34,18 @@ export default new Router({
       path: '/project/:slug',
       name: 'project',
       component: () => import('./views/Project.vue')
+    },
+    {
+      path: '/portfolio',
+      name: 'portfolio',
+      component: () => import('./views/Page.vue'),
+      props: { name: 'Portfolio' }
+    },
+    {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('./views/Page.vue'),
+      props: { name: 'Blog' }
     }
   ]
 })

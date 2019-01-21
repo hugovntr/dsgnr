@@ -14,6 +14,15 @@ $dsgnr-light-color: #EFEFEF;
 $dsgnr-black-color: #000000;
 $dsgnr-white-color: #FFFFFF;
 
+$colors: (
+    primary: $dsgnr-primary-color,
+    secondary: $dsgnr-secondary-color,
+    dark: $dsgnr-dark-color,
+    medium: $dsgnr-medium-color,
+    light: $dsgnr-light-color,
+    black: $dsgnr-black-color,
+    white: $dsgnr-white-color
+);
 
 /*
 ** Transition

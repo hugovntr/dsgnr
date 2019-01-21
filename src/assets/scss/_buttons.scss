@@ -19,23 +19,30 @@ please do not change anything here !
 		color: $dsgnr-black-color;
 	}
 
-	&.btn-secondary {
-		background-color: $dsgnr-secondary-color;
-		border-color: $dsgnr-secondary-color;
-		&:hover {
-			background-color: transparent;
-			color: $dsgnr-secondary-color;
+	@each $id, $color in $colors {
+		&.btn-#{$id} {
+			background-color: $color;
+			border-color: $color;
+			&:hover {
+				background-color: transparent;
+				color: $color;
+			}
+		}
+		&.btn-#{$id}-outline {
+			background: transparent;
+			border: 1px solid;
+			border-color: $color;
+			color: $color;
+			&:hover {
+				background-color: $color;
+				color: $dsgnr-white-color; // Default value
+			}
 		}
 	}
 
-	&.btn-primary-outline {
-		background: transparent;
-		border: 1px solid $dsgnr-primary-color;
-		&:hover {color: $dsgnr-primary-color;}
-	}
-
-	&.btn-black-outline {
-		background: transparent;
-		border-color: $dsgnr-black-color;
-	}
+	/*
+	* Exceptions
+	*/
+	&.btn-white-outline:hover { color: $dsgnr-black-color; }
+	&.btn-white { color: $dsgnr-black-color; }
 }

@@ -8,7 +8,9 @@
 						<div class="card-body d-flex flex-column justify-content-between">
 							<p class="secondary-font">{{ item.title }}</p>
 							<div class="mb-2">{{ item.content | stripHTML | truncate(30) }}</div>
-							<router-link class="btn" :to="{name: 'adminEditPost', params: {slug: item.slug}}">Edit Project</router-link>
+							<div class="d-flex justify-content-between">
+								<router-link class="btn" :to="{name: 'adminEditPost', params: {slug: item.slug}}">Edit Project</router-link>
+							</div>
 						</div>
 					</div>
 				</div>
