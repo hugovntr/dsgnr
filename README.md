@@ -2,7 +2,7 @@
 
 Version: 0.0.12-dev\
 Build Name: __Harvard Panther__\
-Status: *unsafe for production*\
+Status: *unsafe for production*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://github.com/BLVCKLNGS/dsgnr/blob/master/LICENSE)
 
