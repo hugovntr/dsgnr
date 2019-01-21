@@ -14,7 +14,7 @@ However, if you still want to install it in *local* to check it out and have a l
 * Install npm dependencies `yarn install`
 * Launch the local server `yarn run serve` or `yarn serve`
 
-## API Environnement
+## API Environment
 
 In the directory `/api` you will find a file `.env.example`. It is recommended to copy this file and to rename it `.env` inside you can change the __APP_URL__ or the __APP_NAME__ if you want/need to.
 For now we use a SQLite database, if you want to use anything else like MySQL, PostgreSQL or Redis, you can change the __DB_...__ section values.
