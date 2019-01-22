@@ -1,6 +1,11 @@
 <template>
 	<div class="home">
 		<div class="container">
+
+			<div class="row">
+				<router-view />
+			</div>
+
 			<div class="row">
 				<div class="col-sm-4 my-2" v-for="item in items">
 					<div class="card h-100">
@@ -9,21 +14,13 @@
 							<p class="secondary-font">{{ item.title }}</p>
 							<div class="mb-2">{{ item.content | stripHTML | truncate(30) }}</div>
 							<div class="d-flex justify-content-between">
-								<router-link class="btn" :to="{name: 'adminEditPost', params: {slug: item.slug}}">Edit Project</router-link>
+								<router-link class="btn btn-black" :to="{name: 'adminEditPost', params: {slug: item.slug}}">Edit Project</router-link>
+								<router-link class="btn btn-black-text" :to="{name: 'adminDeletePost', params: {slug: item.slug}}"><i class="fas fa-trash"></i></router-link>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="row">
-				<router-view/>
-			</div>
-
-			<!-- <div class="row">
-				<editor :item="toSend"/>
-			</div> -->
-
 		</div>
 	</div>
 </template>
@@ -34,20 +31,20 @@ import Editor from '@/components/assets/Editor'
 export default {
   name: 'index',
   components: {
-	Editor,
+		Editor,
   },
   data() {
-	return {
-		items: [],
-	  toSend: null
-	}
+		return {
+			items: [],
+			toSend: null
+		}
   },
   created() {
-	this.$http.get(this.$config.api._getImages.url)
-	.then(res => {
-		this.items = res.data.data;
-	})
-	.catch(err => console.log('Request failed', err));
+		this.$http.get(this.$config.api._getImages.url)
+		.then(res => {
+			this.items = res.data.data;
+		})
+		.catch(err => console.log('Request failed', err));
   }
 }
 </script>

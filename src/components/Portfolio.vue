@@ -5,10 +5,14 @@
 			<p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat vero corporis modi <a href="#">laudantium</a> eveniet facilis incidunt expedita blanditiis mollitia, animi explicabo autem omnis repellat dolorem quaerat, dicta labore repellendus. Repellendus!</p>
 		</div>
 
+		<div v-if="$route.name == 'portfolio'">
+			<Pagination :pagination="pagination" controls name="portfolio"/>
+		</div>
+
 		<div class="wrapper container-fluid">
 			<div class="row">
 				<div class="card-columns">
-					<div class="card p-0 m-0" v-for="item in items">
+					<div class="card p-0 m-0" v-for="(item, index) in items" :key="index">
 						<div class="card-body m-0 p-0">
 							<div class="card-img">
 								<div class="overlay p-4 d-flex justify-content-center align-items-center">
@@ -26,9 +30,9 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row" v-if="$route.name != 'portfolio'">
 				<div class="d-flex w-100 py-4 my-4 justify-content-center">
-					<router-link :to="{name: 'portfolio'}" class="btn btn-dark-outline">See more</router-link>
+					<router-link :to="{name: 'portfolio'}" class="btn btn-black-outline">See more</router-link>
 				</div>
 			</div>
 		</div>
@@ -37,27 +41,47 @@
 
 <script>
 	import DSGNRImage from '@/components/assets/Image'
+	import Pagination from "@/components/assets/Pagination"
 
 	export default {
 		name: "Portfolio",
 		components: {
-			DSGNRImage
+			DSGNRImage,
+			Pagination
 		},
 		props: {
-			title: {type: Boolean, default: true}
+			title: {type: Boolean, default: true},
+			page: {type: Number, default: 1}
+		},
+		watch: {
+			page(to, from) {
+				this.getPage(to);
+			}
 		},
 		data() {
 			return {
-				items: []
+				items: [],
+				pagination: {
+					links: {},
+					meta: {}
+				},
+				controls: true,
+			}
+		},
+		methods: {
+			getPage(page = 1) {
+				this.$http.get(this.$config.api._getImages(page).pages)
+				.then(res => {
+					this.items = res.data.data;
+					this.pagination.links = res.data.links;
+					this.pagination.meta = res.data.meta;
+				})
+				.catch(err => console.log('Request failed', err));
 			}
 		},
 		mounted() {
-			this.$http.get(this.$config.api._getImages.url)
-			.then(res => {
-				this.items = res.data.data;
-			})
-			.catch(err => console.log('Request failed', err));
-		}
+			this.getPage(this.page);
+		},
 	}
 </script>
 

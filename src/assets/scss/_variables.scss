@@ -42,10 +42,19 @@ $transition-property: ease;
 $primary-font-family: 'Avenir Next', 'Helvetica', 'Arial', sans-serif;
 $secondary-font-family: 'Playfair Display', sans-serif;
 
-$dsgnr-default-font-size: 18px;
-$dsgnr-xs-font-size: 13px;
-$dsgnr-sm-font-size: 16px;
-$dsgnr-lg-font-size: 20px;
+$font-sizes: (
+    default: 18px,
+    xs: 13px,
+    sm: 16px,
+    lg: 20px,
+);
 
 $h1-font-size: 84px;
 $h1-xs-font-size: 60px;
+
+$font-weights: (
+    default: 400, regular: 400,
+    medium: 500,
+    bold: 700, strong: 700,
+    black: 900,
+)

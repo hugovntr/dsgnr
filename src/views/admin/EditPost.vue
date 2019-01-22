@@ -70,7 +70,10 @@
 					this.post = res.data.data;
 					this.thumbnail = this.post.url;
 				})
-				.catch(err => console.log('Request failed', err));
+				.catch(err => {
+					console.log('Request failed', err);
+					this.$router.back();
+				});
 			},
 			onFileChange(e) {
 				

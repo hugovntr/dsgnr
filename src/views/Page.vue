@@ -1,7 +1,7 @@
 <template>
     <div>
         <keep-alive>
-            <component :is="component" v-if="component" />
+            <component :is="component" :page="page" v-if="component" />
         </keep-alive>
     </div>
 </template>
@@ -22,6 +22,7 @@ export default {
     data() {
         return {
             component: null,
+            page: +this.$route.params.page,
         }
     },
     computed: {
@@ -43,6 +44,10 @@ export default {
     },
     mounted() {
         this.loadComponent();
+    },
+    beforeRouteUpdate (to, from, next) {
+        this.page = +to.params.page;
+        next();
     },
 
 }

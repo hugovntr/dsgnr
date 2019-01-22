@@ -17,17 +17,20 @@ export default new Router({
       name: 'admin',
       component: () => import(/* webpackChunkName: "admin" */ './views/admin/Index.vue'),
     },
+
+    /*
+    * Portfolio Administration Routes
+    */
     {
-      path: '/admin/edit/:slug',
-      name: 'adminEditPost',
-      component: () => import('./views/admin/EditPost.vue')
+      path: '/admin/portfolio/:slug', component: () => import('./views/admin/RouterComponent.vue'),
+      children: [
+        {path: 'edit', name: "adminEditPost", component: () => import('./views/admin/EditPost.vue')},
+        {path: 'delete', name: "adminDeletePost", component: () => import('./views/admin/DeletePost.vue')}
+      ],
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
@@ -36,7 +39,7 @@ export default new Router({
       component: () => import('./views/Project.vue')
     },
     {
-      path: '/portfolio',
+      path: '/portfolio/:page?',
       name: 'portfolio',
       component: () => import('./views/Page.vue'),
       props: { name: 'Portfolio' }

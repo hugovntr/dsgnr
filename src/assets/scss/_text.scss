@@ -8,7 +8,7 @@ please do not change anything here !
 ————————————————————————————————————————*/
 
 body {
-	font-size: $dsgnr-default-font-size;
+	font-size: map-get($map: $font-sizes, $key: 'default');
 	color: $dsgnr-dark-color;
 }
 
@@ -18,28 +18,32 @@ h1 {
 	@include breakpoint(xs) {font-size: $h1-xs-font-size;}
 }
 
+// Font family classes
 .primary-font {font-family: $primary-font-family;}
 .secondary-font {font-family: $secondary-font-family;}
 
-.default-font-size {font-size: $dsgnr-default-font-size;}
-.xs-font-size {font-size: $dsgnr-xs-font-size;}
-.sm-font-size {font-size: $dsgnr-sm-font-size;}
-.lg-font-size {font-size: $dsgnr-lg-font-size;}
+// Font Size classes
+@each $id, $size in $font-sizes {
+	.#{$id}-font-size {font-size: $size}
+}
 
+// Title font size classes
 .h1-font-size {font-size: $h1-font-size;}
 .h1-xs-font-size {font-size: $h1-xs-font-size;}
 
-//- Color classes for easy access
-.black-color {color: $dsgnr-black-color;}
-.white-color {color: $dsgnr-white-color;}
-.dark-color {color: $dsgnr-dark-color;}
-.medium-color {color: $dsgnr-medium-color;}
-.light-color {color: $dsgnr-light-color;}
-.secondary-color {color: $dsgnr-secondary-color;}
-.primary-color {color: $dsgnr-primary-color;}
+// Font weight classes
+@each $id, $weight in $font-weights {
+	.#{$id}-font-weight {font-weight: $weight;}
+}
+
+
+// Color classes
+@each $id, $color in $colors {
+	.#{$id}-color {color: $color;}
+}
 
 a {
-	&:not(.control):not(.btn) {
+	&:not(.control):not(.btn):not(.page-link) {
 		color: $dsgnr-black-color;
 		position: relative;
 		font-weight: 500;

@@ -3,9 +3,12 @@ function getConfig() {
 		? 'http://api.dsgnr.lab/v1/'
 		: 'http://127.0.0.1/dsgnr/api/v1',
 	this.api = {
-		_getImages: {
-			method: 'GET',
-			url: this.API_LOCATION + 'images',
+		_getImages: (page = 1) => {
+			return {
+				method: 'GET',
+				url: this.API_LOCATION + 'images',
+				pages: this.API_LOCATION + 'images?page=' + page,
+			};
 		},
 		_getImage: (slug) => {
 			return {
