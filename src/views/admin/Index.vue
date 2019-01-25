@@ -7,7 +7,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-sm-4 my-2" v-for="item in items">
+				<div class="col-sm-4 my-2" v-for="(item, index) in items" :key="index">
 					<div class="card h-100">
 						<img :src="item.url | resize(300)" alt="" style="height: 200px; object-fit: cover;" class="card-img-top img-fluid">
 						<div class="card-body d-flex flex-column justify-content-between">
@@ -27,6 +27,7 @@
 
 <script>
 import Editor from '@/components/assets/Editor'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'index',
@@ -39,10 +40,20 @@ export default {
 			toSend: null
 		}
   },
+  computed: {
+	  ...mapGetters({
+		  getProjects: 'getProjects'
+	  }),
+  },
+  methods: {
+	  ...mapActions({
+		  fetch: 'fetchPage'
+	  }),
+  },
   created() {
-		this.$http.get(this.$config.api._getImages.url)
+		this.fetch()
 		.then(res => {
-			this.items = res.data.data;
+			this.items = this.getProjects;
 		})
 		.catch(err => console.log('Request failed', err));
   }

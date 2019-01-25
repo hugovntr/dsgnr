@@ -6,7 +6,7 @@
 		</div>
 
 		<div v-if="$route.name == 'portfolio'">
-			<Pagination :pagination="pagination" controls name="portfolio"/>
+			<Pagination :pagination="pagination" name="portfolio"/>
 		</div>
 
 		<div class="wrapper container-fluid">
@@ -40,6 +40,9 @@
 </template>
 
 <script>
+	import { mapGetters, mapActions } from "vuex";
+	import * as _ from "lodash";
+
 	import DSGNRImage from '@/components/assets/Image'
 	import Pagination from "@/components/assets/Pagination"
 
@@ -55,31 +58,58 @@
 		},
 		watch: {
 			page(to, from) {
-				this.getPage(to);
+				this.getPage(to || 1);
 			}
 		},
 		data() {
 			return {
 				items: [],
 				pagination: {
-					links: {},
-					meta: {}
+					current_page: 1,
+					per_page: 10,
+					pages_count: 1,
 				},
 				controls: true,
 			}
 		},
+		computed: {
+			...mapGetters({
+				get: 'getProjects',
+				count: 'countProjects',
+				per_page: 'getProjectsPerPage',
+				pages_count: 'getPagesCount',
+			}),
+		},
 		methods: {
+			...mapActions({
+				push: 'addProject',
+				fetch: 'fetchPage',
+				ppp: 'setProjectsPerPage',
+			}),
+			displayItems() {
+				let offset = this.pagination.per_page * (this.pagination.current_page - 1);
+				this.items = _.take(_.drop(this.$store.state.projects, offset), this.pagination.per_page);
+			},
 			getPage(page = 1) {
-				this.$http.get(this.$config.api._getImages(page).pages)
-				.then(res => {
-					this.items = res.data.data;
-					this.pagination.links = res.data.links;
-					this.pagination.meta = res.data.meta;
+				this.fetch(page)
+				.then((res) => {
+					this.pagination.current_page = ((page <= this.pages_count) ? page : this.pages_count) || 1;
+					this.pagination.pages_count = this.$store.state.projects_meta.pages_count;
+					this.pagination.per_page = this.$store.state.projects_meta.ppp;
+					this.displayItems();
+					if (this.$route.name == 'portfolio')
+						this.$router.replace({name: 'portfolio', params: {page: this.pagination.current_page}});
+					console.log(res);
 				})
-				.catch(err => console.log('Request failed', err));
+				.catch((err) => {
+					console.log("Error while fetching projects", err);
+					if (this.$route.name == 'portfolio')
+						this.$router.back();
+				});
 			}
 		},
 		mounted() {
+			this.ppp(15);
 			this.getPage(this.page);
 		},
 	}

@@ -55,7 +55,7 @@ export default {
             })
             .catch(err => {
                 console.log('Request failed', err);
-                this.$router.back();
+                this.$router.push({name: 'adminDeletePost'});
             });
         },
     },

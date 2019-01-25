@@ -22,7 +22,7 @@ export default {
     data() {
         return {
             component: null,
-            page: +this.$route.params.page,
+            page: +this.$route.params.page || 1,
         }
     },
     computed: {
@@ -46,7 +46,7 @@ export default {
         this.loadComponent();
     },
     beforeRouteUpdate (to, from, next) {
-        this.page = +to.params.page;
+        this.page = +to.params.page || 1;
         next();
     },
 

@@ -20,7 +20,8 @@ class ImageController extends Controller
             return Image::get(['slug'])->groupBy('slug')->keys();
         }
 
-        $images = Image::paginate(10);
+        //$images = Image::paginate(10);
+        $images = Image::get();
         return ImageResource::collection($images);
     }
 
