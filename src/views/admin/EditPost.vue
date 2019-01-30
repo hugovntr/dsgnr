@@ -1,7 +1,7 @@
 <template>
 	<div id="edit" class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-4 col-md-4">
+			<div class="col-xs-12 col-sm-12 col-md-4">
 				<label for="thumbnail"><strong>Image</strong></label>
 				<img :src="thumbnail" alt="" class="img-fluid">
 				
@@ -14,7 +14,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-8 col-md-8">
+			<div class="col-xs-12 col-sm-12 col-md-8">
 				<div class="form d-flex flex-column">
 					<div class="title d-flex flex-column mb-3 pb-3">
 						<label for="title"><strong>Title</strong></label>

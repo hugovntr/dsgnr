@@ -131,10 +131,16 @@
 				position: relative;
 				overflow: hidden;
 				border-radius: 0;
+				&.loaded {
+					.overlay{
+						opacity: 1;	
+					}
+				}
 				.overlay {
 					background-color: rgba($dsgnr-black-color, .8);
 					color: $dsgnr-white-color;
 					z-index: -3;
+					opacity: 0;
 					position: absolute;
 					height: 100%;
 					max-width: 100%;

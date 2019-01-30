@@ -3,7 +3,7 @@
 		:data-src="lazySrc"
 		:data-srcset="lazySrcSet"
 		:style="style"
-		class="img-fluid"
+		class="img-fluid animated"
 	/>
 </template>
 
@@ -55,8 +55,15 @@
 				this.$el.removeEventListener('load', setLoadingState);
 			});
 
-			const observer = lozad(this.$el);
-			observer.observe();
+			lozad(this.$el, {
+				load: function(el) {
+					el.src = el.dataset.src;
+					el.onload = function() {
+						el.classList.add('fadeIn')
+						el.parentElement.classList.add('loaded')
+					}
+				}
+			}).observe();
 		},
 	};
 </script>

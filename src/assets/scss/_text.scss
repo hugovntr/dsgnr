@@ -13,9 +13,14 @@ body {
 }
 
 h1 {
-	font-size: $h1-font-size;
+	font-size: map-get($map: $h1-font-sizes, $key: 'default');
+	line-height: 1;
 	font-family: $secondary-font-family;
-	@include breakpoint(xs) {font-size: $h1-xs-font-size;}
+	@each $id, $size in $h1-font-sizes {
+		@include breakpoint($id) {
+			font-size: $size;
+		}
+	}
 }
 
 // Font family classes
@@ -28,8 +33,9 @@ h1 {
 }
 
 // Title font size classes
-.h1-font-size {font-size: $h1-font-size;}
-.h1-xs-font-size {font-size: $h1-xs-font-size;}
+@each $id, $size in $h1-font-sizes {
+	.h1-#{$id}-font-size { font-size: $size }
+}
 
 // Font weight classes
 @each $id, $weight in $font-weights {

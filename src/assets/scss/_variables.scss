@@ -49,8 +49,14 @@ $font-sizes: (
     lg: 20px,
 );
 
-$h1-font-size: 84px;
-$h1-xs-font-size: 60px;
+$h1-font-sizes: (
+    default: 84px,
+    xs: 60px,
+    sm: 72px,
+    md: 84px,
+    lg: 84px,
+    xl: 84px
+);
 
 $font-weights: (
     default: 400, regular: 400,

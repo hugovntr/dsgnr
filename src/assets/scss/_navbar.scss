@@ -116,8 +116,11 @@
 				align-items: center;
 
 				li {
-					font-size: $h1-font-size;
-					@include breakpoint(xs) {font-size: $h1-xs-font-size;}
+					@extend h1;
+					line-height: 1.4;
+					font-family: $primary-font-family;
+					// font-size: $h1-font-size;
+					// @include breakpoint(xs) {font-size: $h1-xs-font-size;}
 					font-weight: 700;
 					color: $dsgnr-medium-color;
 					@include transition(color $transition-duration);
