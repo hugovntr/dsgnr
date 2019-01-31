@@ -8,7 +8,8 @@ const conf = config.getConfig();
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const portfolio = {
+	namespaced: true,
 	state: {
 		projects: [],
 		projects_meta: {
@@ -57,12 +58,10 @@ export default new Vuex.Store({
 		},
 		fetchPage({ commit, getters }, page = 1) {
 			return new Promise((resolve, reject) => {
-				if (page <= getters.getPagesCount || getters.getPagesCount == 0)
-				{
-					if (getters.countProjects == 0)
-					{
-						if (getters.getProjectsPerPage == 0) {commit('SET_PPP', 10);}
-						
+				if (page <= getters.getPagesCount || getters.getPagesCount == 0) {
+					if (getters.countProjects == 0) {
+						if (getters.getProjectsPerPage == 0) { commit('SET_PPP', 10); }
+
 						axios.get(conf.api._getImages(page).pages)
 							.then(res => {
 
@@ -96,5 +95,30 @@ export default new Vuex.Store({
 				}
 			});
 		},
+	}
+}
+
+const user = {
+	namespaced: true,
+	state: {
+		username: ''
+	},
+	getters: {
+		username: (state) => { return state.username },
+	},
+	mutations: {
+		SET_USERNAME: (state, payload) => { state.username = payload }
+	},
+	actions: {
+		defineUser: (context, user) => {
+			context.commit('SET_USERNAME', user)
+		}
+	}
+}
+
+export default new Vuex.Store({
+	modules: {
+		portfolio: portfolio,
+		user: user,
 	}
 })

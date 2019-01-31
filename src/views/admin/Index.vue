@@ -1,11 +1,6 @@
 <template>
 	<div class="home">
 		<div class="container">
-
-			<div class="row">
-				<router-view />
-			</div>
-
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-4 my-2" v-for="(item, index) in items" :key="index">
 					<div class="card h-100">
@@ -26,14 +21,10 @@
 </template>
 
 <script>
-import Editor from '@/components/assets/Editor'
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'index',
-  components: {
-		Editor,
-  },
   data() {
 		return {
 			items: [],
@@ -41,12 +32,12 @@ export default {
 		}
   },
   computed: {
-	  ...mapGetters({
+	  ...mapGetters('portfolio', {
 		  getProjects: 'getProjects'
 	  }),
   },
   methods: {
-	  ...mapActions({
+	  ...mapActions('portfolio', {
 		  fetch: 'fetchPage'
 	  }),
   },
@@ -56,6 +47,9 @@ export default {
 			this.items = this.getProjects;
 		})
 		.catch(err => console.log('Request failed', err));
+
+		console.log(this.$route);
+		
   }
 }
 </script>

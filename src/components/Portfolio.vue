@@ -73,7 +73,7 @@
 			}
 		},
 		computed: {
-			...mapGetters({
+			...mapGetters('portfolio', {
 				get: 'getProjects',
 				count: 'countProjects',
 				per_page: 'getProjectsPerPage',
@@ -81,21 +81,21 @@
 			}),
 		},
 		methods: {
-			...mapActions({
+			...mapActions('portfolio', {
 				push: 'addProject',
 				fetch: 'fetchPage',
 				ppp: 'setProjectsPerPage',
 			}),
 			displayItems() {
 				let offset = this.pagination.per_page * (this.pagination.current_page - 1);
-				this.items = _.take(_.drop(this.$store.state.projects, offset), this.pagination.per_page);
+				this.items = _.take(_.drop(this.get, offset), this.pagination.per_page);
 			},
 			getPage(page = 1) {
 				this.fetch(page)
 				.then((res) => {
 					this.pagination.current_page = ((page <= this.pages_count) ? page : this.pages_count) || 1;
-					this.pagination.pages_count = this.$store.state.projects_meta.pages_count;
-					this.pagination.per_page = this.$store.state.projects_meta.ppp;
+					this.pagination.pages_count = this.pages_count;
+					this.pagination.per_page = this.per_page;
 					this.displayItems();
 					if (this.$route.name == 'portfolio')
 						this.$router.replace({name: 'portfolio', params: {page: this.pagination.current_page}});

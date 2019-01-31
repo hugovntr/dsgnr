@@ -11,9 +11,9 @@
 				</div>
 			</div>
 			<ul>
-				<router-link tag="li" @click.native="close" to="/blog">Blog</router-link>
-				<router-link tag="li" @click.native="close" to="/admin">Admin</router-link>
-				<router-link tag="li" @click.native="close" to="/portfolio">Portfolio</router-link>
+				<router-link tag="li" @click.native="close" :to="{name: 'blog'}">Blog</router-link>
+				<router-link tag="li" @click.native="close" :to="{name: 'admin'}">Admin</router-link>
+				<router-link tag="li" @click.native="close" :to="{name: 'portfolio'}">Portfolio</router-link>
 			</ul>
 		</div>
 	</div>

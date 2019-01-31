@@ -45,7 +45,7 @@
 	import Editor from '@/components/assets/Editor'
 
 	export default {
-		name: "Edit",
+		name: "adminEditPost",
 		components: {
 			Editor
 		},
@@ -65,6 +65,9 @@
 		},
 		methods: {
 			getProject() {
+				// NEED
+				// A
+				// FIX
 				this.$http.get(this.$config.api._getImage(this.slug).url)
 				.then(res => {
 					this.post = res.data.data;

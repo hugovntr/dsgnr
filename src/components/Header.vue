@@ -2,7 +2,7 @@
 	<div id="header" class="mb-4">
 		<div class="vertical-line hidden"/>
 		<div class="container mb-4">
-			<h1><span class="primary-font bold-font-weight">Welcome to,</span><br/>DSNGRLab</h1>
+			<h1><span class="primary-font bold-font-weight">Welcome to,</span><br/>{{username}}</h1>
 		</div>
 		<div class="vertical-line"/>
 
@@ -13,8 +13,15 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex';
+
 	export default {
 		name: 'Header',
+		computed: {
+			...mapGetters('user', {
+				username: 'username',
+			})
+		}
 	}
 </script>
 
