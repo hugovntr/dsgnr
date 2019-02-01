@@ -1,0 +1,15 @@
+@02-01-2019:
+    VueX (User):
+        ☐ Architecture du store
+        ☐ Mutations pour chacunes des propriétées du store
+        ☐ Action de récupération de la configuration utilisateur
+    Databases:
+        ☐ Quel type de base pour stocker les configurations utilisateurs
+        ☐ Créer une base de données "test" pour un utilisateur fictif.
+    API: 
+        ☐ Vérification de l'éxistance d'un utilisateur
+            Pour vérifier, il suffit du coup de savoir si la DB user existe
+        ☐ Configurer les routes de récupération de la configuration utilisateur
+            La route doit prendre en paramètre l'username -> Vérifier si l'utilisateur éxiste
+            [true]  -> Récupérer ses informations dans sa base de donnée -> Retourner ses infos en JSON
+            [false] -> Renvoyer NULL

@@ -20,7 +20,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-
-
-# Todo for the next days
-.todo

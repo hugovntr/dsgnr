@@ -1,5 +1,5 @@
 function getConfig() {
-	let API_LOCATION = process.env.VUE_APP_API_URL || 'http://127.0.0.1/dsngr/api/v1';
+	let API_LOCATION = process.env.VUE_APP_API_URL || 'http://127.0.0.1/dsgnr/api/v1/';
 	
 	this.api = {
 		_getImages: (page = 1) => {
