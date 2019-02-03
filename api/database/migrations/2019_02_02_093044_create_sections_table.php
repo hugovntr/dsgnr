@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagesTable extends Migration
+class CreateSectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('sections', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('site_id');
-            $table->string('title');
-            $table->string('slug');
-            $table->string('url');
-            $table->text('content');
-            $table->integer('cat_id');
+            $table->string('name');
+            $table->boolean('in_home')->default(1);
+            $table->integer('order_home')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('sections');
     }
 }

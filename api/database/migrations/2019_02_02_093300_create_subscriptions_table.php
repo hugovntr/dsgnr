@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagesTable extends Migration
+class CreateSubscriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('site_id');
-            $table->string('title');
-            $table->string('slug');
-            $table->string('url');
-            $table->text('content');
-            $table->integer('cat_id');
+            $table->integer('user_id');
+            $table->integer('level')->default(0);
+            $table->boolean('auto_renew')->default(false);
+            $table->timestamp('valid_until')->nullable();
+            $table->integer('payment_type')->default(0);
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('subscriptions');
     }
 }

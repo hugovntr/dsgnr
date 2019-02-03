@@ -11,7 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        $this->call(ImagesTableSeeder::class);
+
+        if ($this->command->confirm('Would you like me to clear the database before seeding ?')) {
+            $this->command->call('migrate:fresh');
+            $this->command->line('Database cleared!');
+        }
+
+        $this->call(DSGNRTableSeeder::class);
     }
 }
