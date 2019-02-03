@@ -26,6 +26,8 @@ Route::prefix('v1')->group(function() {
 	});
 
 	Route::apiResource('images', 'ImageController')->middleware('cors');
+	Route::apiResource('users', 'UserController')->middleware('cors');
+	Route::apiResource('sites', 'SiteController')->middleware('cors');
 });
 
 /*

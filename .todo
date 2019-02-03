@@ -10,11 +10,8 @@
             ✔ Images
         ✔ Faire le seed
     API: 
-        ☐ Vérification de l'éxistance d'un utilisateur
-        ☐ Configurer les routes de récupération de la configuration utilisateur
-            La route doit prendre en paramètre l'username -> Vérifier si l'utilisateur éxiste
-            [true]  -> Récupérer ses informations dans sa base de donnée -> Retourner ses infos en JSON
-            [false] -> Renvoyer NULL
+        ✔ Vérification de l'éxistance d'un utilisateur
+        ✔ Configurer les routes de récupération de la configuration utilisateur
     VueX (User):
         ☐ Architecture du store
         ☐ Mutations pour chacunes des propriétées du store

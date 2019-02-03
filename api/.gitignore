@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/dsgnr.db
 /vendor
 .env
 .phpunit.result.cache
