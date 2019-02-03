@@ -16,3 +16,7 @@
         ☐ Architecture du store
         ☐ Mutations pour chacunes des propriétées du store
         ☐ Action de récupération de la configuration utilisateur
+    Front:
+        ☐ Revoir les endpoints d'API, notamment le _getImages puisque les images sont séparés pour chaque site/utilisateur (/sites/:id)
+        ☐ Utiliser le v-html pour la About page et le Header (dans un premier temps) — A l'avenir, privilégié l'utilisation de v-html plutôt que du texte brut
+        ☐ Essayer (si possible) d'implémenter les couleurs dynamiques (Peut-être avec l'utilisation du CSS4 et des valeurs de fallback au cas où)
