@@ -1,7 +1,7 @@
 <template>
   <div id="userindex">
     <Navbar :absolute="isHeader"/>
-    <router-view/>
+    <router-view v-if="storeDefined"/>
     <Flash/>
     <Footer/>
   </div>
@@ -20,6 +20,11 @@ export default {
     Footer,
     Flash
   },
+  data() { 
+    return {
+      storeDefined: false,
+    }
+  },
   computed: {
     isHeader: function() {
       if (this.$route.name === "home")
@@ -28,23 +33,28 @@ export default {
         return false;
     }
   },
-  data() {
-      return {
-          validUsers: ['hugo', 'blvcklngs']
-      }
-  },
   methods: {
-      isValidUser() {
-          if (this.validUsers.indexOf(this.$route.params.user) >= 0) return (true);
-          return (false);
+      validatingUser(_username) {
+        this.$http.get(this.$config.api._getUser(_username).url)
+          .then((res) => {
+            this.defineUser(res.data.data.id)
+              .then(() => {
+                this.storeDefined = true
+              })
+              .catch(() => {
+                console.error("Error");
+              });
+          })
+          .catch((err) => {
+            this.$router.replace({name: 'index'});
+          })
       },
       ...mapActions('user', {
           defineUser: 'defineUser'
       }),
   },
   mounted() {
-      if (!this.isValidUser()) { this.$router.replace({name: 'index'}); return; }
-      this.defineUser(this.$route.params.user)
+      this.validatingUser(this.$route.params.user);
   }
 }
 </script>

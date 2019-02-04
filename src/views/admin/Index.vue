@@ -2,7 +2,7 @@
 	<div class="home">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-4 my-2" v-for="(item, index) in items" :key="index">
+				<div class="col-xs-12 col-sm-6 col-md-4 my-2" v-for="(item, index) in projects" :key="index">
 					<div class="card h-100">
 						<img :src="item.url | resize(300)" alt="" style="height: 200px; object-fit: cover;" class="card-img-top img-fluid">
 						<div class="card-body d-flex flex-column justify-content-between">
@@ -27,13 +27,12 @@ export default {
   name: 'index',
   data() {
 		return {
-			items: [],
 			toSend: null
 		}
   },
   computed: {
-	  ...mapGetters('portfolio', {
-		  getProjects: 'getProjects'
+	  ...mapGetters('user', {
+		  projects: 'projects'
 	  }),
   },
   methods: {
@@ -41,15 +40,5 @@ export default {
 		  fetch: 'fetchPage'
 	  }),
   },
-  created() {
-		this.fetch()
-		.then(res => {
-			this.items = this.getProjects;
-		})
-		.catch(err => console.log('Request failed', err));
-
-		console.log(this.$route);
-		
-  }
 }
 </script>

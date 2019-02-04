@@ -4,53 +4,53 @@ const conf = config.getConfig();
 
 export default {
     namespaced: true,
-        state: {
+    state: {
         projects: [],
-            projects_meta: {
+        projects_meta: {
             pages_count: 0,
-                ppp: 0,
-		}
+            ppp: 0,
+        }
     },
     getters: {
         getProjects: (state) => {
             return state.projects;
         },
-            countProjects: (state) => {
-                return state.projects.length;
-            },
-                getPagesCount: (state) => {
-                    return state.projects_meta.pages_count;
-                },
-                    getProjectsPerPage: (state) => {
-                        return state.projects_meta.ppp;
-                    }
+        countProjects: (state) => {
+            return state.projects.length;
+        },
+        getPagesCount: (state) => {
+            return state.projects_meta.pages_count;
+        },
+        getProjectsPerPage: (state) => {
+            return state.projects_meta.ppp;
+        }
     },
     mutations: {
         ADD_PROJECT: (state, payload) => {
             state.projects.push(payload);
         },
-            SET_PPP: (state, payload) => {
-                state.projects_meta.ppp = payload;
-            },
-                FILL_PAGE: (state, payload) => {
-                    payload.forEach(el => {
-                        if (_.find(state.projects, function (o) { return o.slug == el.slug }) == undefined)
-                            state.projects.push(el);
-                    });
-                },
-                    FILL_META: (state, payload) => {
-                        state.projects_meta.pages_count = payload.pages_count;
-                        state.projects_meta.ppp = payload.per_page;
-                    }
+        SET_PPP: (state, payload) => {
+            state.projects_meta.ppp = payload;
+        },
+        FILL_PAGE: (state, payload) => {
+            payload.forEach(el => {
+                if (_.find(state.projects, function (o) { return o.slug == el.slug }) == undefined)
+                    state.projects.push(el);
+            });
+        },
+        FILL_META: (state, payload) => {
+            state.projects_meta.pages_count = payload.pages_count;
+            state.projects_meta.ppp = payload.per_page;
+        }
     },
     actions: {
         addProject: (context, project) => {
             context.commit('ADD_PROJECT', project);
         },
-            setProjectsPerPage: (context, count = 10) => {
-                context.commit('SET_PPP', count);
-            },
-                fetchPage({ commit, getters }, page = 1) {
+        setProjectsPerPage: (context, count = 10) => {
+            context.commit('SET_PPP', count);
+        },
+        fetchPage({ commit, getters }, page = 1) {
             return new Promise((resolve, reject) => {
                 if (page <= getters.getPagesCount || getters.getPagesCount == 0) {
                     if (getters.countProjects == 0) {

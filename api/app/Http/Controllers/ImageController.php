@@ -67,8 +67,13 @@ class ImageController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $image = Image::where('slug', $slug)->firstorfail();
+        $site_id = $request->input('site_id');
+        $image = Image::where('slug', $slug)->where('site_id', $site_id)->firstorfail();
 
+        if (str_slug($request->input('title'), '-') != $slug && Image::where('slug', str_slug($request->input('title'), '-'))->exists())
+        {
+            return response()->json(["FAILED"], 403); //Bad credentials
+        }
 
         if ($request->hasFile('media')) {
             $validator = Validator::make($request->all(), [

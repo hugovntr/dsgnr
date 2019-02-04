@@ -13,10 +13,23 @@
         ✔ Vérification de l'éxistance d'un utilisateur
         ✔ Configurer les routes de récupération de la configuration utilisateur
     VueX (User):
-        ☐ Architecture du store
-        ☐ Mutations pour chacunes des propriétées du store
-        ☐ Action de récupération de la configuration utilisateur
+        ✔ Architecture du store
+        ✔ Mutations pour chacunes des propriétées du store
+        ✔ Action de récupération de la configuration utilisateur
     Front:
-        ☐ Revoir les endpoints d'API, notamment le _getImages puisque les images sont séparés pour chaque site/utilisateur (/sites/:id)
+        ✔ Revoir les endpoints d'API, notamment le _getImages puisque les images sont séparés pour chaque site/utilisateur (/sites/:id)
         ☐ Utiliser le v-html pour la About page et le Header (dans un premier temps) — A l'avenir, privilégié l'utilisation de v-html plutôt que du texte brut
         ☐ Essayer (si possible) d'implémenter les couleurs dynamiques (Peut-être avec l'utilisation du CSS4 et des valeurs de fallback au cas où)
+
+@02-04-2019:
+    Front:
+        ✔ Fix la récupération d'images sur le component Portfolio (Ne s'affiche que si l'on va sur la route /portfolio)
+        ✔ Récupérer uniquement les images utilisateurs sur la page projects
+        ✔ Récupérer uniquement les images utilisateurs sur la page Admin
+    API:
+        ✔ Modifier les paramètres de validations de modification d'un projet dans l'administration. Utiliser comme params le slug ET l'user_id/site_id, comme les slugs peuvent être les mêmes pour plusieurs sites. @high
+        ✔ Correction des paramètres de validations d'un projet dans l'API: Il faut autoriser la duplication de slugs mais uniquement dans le cas où l'user_id/site_id est différent. @high
+    VueX:
+        ☐ Regarder pourquoi lorsqu'on modifie un titre de projet qui correspond à un titre éxistant, on reçoit une erreur, le commit d'edition n'est pas fait, mais si on retourne en arrière, le titre dans l'administration est modifié quand même... Sans doutes un bug de VueX
+    Database:
+        ☐ Relancer un seed, pour réparé toutes les erreurs du débugage @critical 

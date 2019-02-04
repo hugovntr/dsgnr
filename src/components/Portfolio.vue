@@ -68,48 +68,35 @@
 					current_page: 1,
 					per_page: 10,
 					pages_count: 1,
+					projects_count: 1,
 				},
 				controls: true,
 			}
 		},
 		computed: {
-			...mapGetters('portfolio', {
-				get: 'getProjects',
-				count: 'countProjects',
-				per_page: 'getProjectsPerPage',
-				pages_count: 'getPagesCount',
+			...mapGetters('user', {
+				projectsCount: 'projectsCount',
+				projectsByPage: 'projectsByPage',
+				projectsMeta: 'projectsMeta'
 			}),
 		},
 		methods: {
-			...mapActions('portfolio', {
-				push: 'addProject',
-				fetch: 'fetchPage',
-				ppp: 'setProjectsPerPage',
-			}),
-			displayItems() {
-				let offset = this.pagination.per_page * (this.pagination.current_page - 1);
-				this.items = _.take(_.drop(this.get, offset), this.pagination.per_page);
-			},
 			getPage(page = 1) {
-				this.fetch(page)
-				.then((res) => {
-					this.pagination.current_page = ((page <= this.pages_count) ? page : this.pages_count) || 1;
-					this.pagination.pages_count = this.pages_count;
-					this.pagination.per_page = this.per_page;
-					this.displayItems();
-					if (this.$route.name == 'portfolio')
-						this.$router.replace({name: 'portfolio', params: {page: this.pagination.current_page}});
-					console.log(res);
-				})
-				.catch((err) => {
-					console.log("Error while fetching projects", err);
-					if (this.$route.name == 'portfolio')
-						this.$router.back();
-				});
+				this.items = this.projectsByPage(page);
+				console.log(this.items);
+				
+
+				this.pagination.current_page = ((page <= this.projectsMeta.pages_count) ? page : this.projectsMeta) || 1;
+				this.pagination.pages_count = this.projectsMeta.pages_count;
+				this.pagination.per_page = this.projectsMeta.per_page;
+				this.pagination.projects_count = this.projectsCount;
+
+				if (this.$route.name == 'portfolio') {
+					this.$router.replace({name: 'portfolio', params: {page: this.pagination.current_page}});
+				}
 			}
 		},
-		mounted() {
-			this.ppp(15);
+		created() {
 			this.getPage(this.page);
 		},
 	}

@@ -43,6 +43,7 @@
 
 <script>
 	import Editor from '@/components/assets/Editor'
+	import { mapGetters, mapActions } from 'vuex';
 
 	export default {
 		name: "adminEditPost",
@@ -63,20 +64,24 @@
 				mediaToPost: ''
 			}
 		},
+		computed: {
+			...mapGetters('user', {
+				projectBySlug: 'projectBySlug',
+			}),
+		},
 		methods: {
+			...mapActions('user', {
+				editProject: 'editProject'
+			}),
 			getProject() {
-				// NEED
-				// A
-				// FIX
-				this.$http.get(this.$config.api._getImage(this.slug).url)
-				.then(res => {
-					this.post = res.data.data;
+				if (this.projectBySlug(this.slug)) {
+					this.post = this.projectBySlug(this.slug);
 					this.thumbnail = this.post.url;
-				})
-				.catch(err => {
-					console.log('Request failed', err);
+				}
+				else {
+					console.error('Invalid project');
 					this.$router.back();
-				});
+				}
 			},
 			onFileChange(e) {
 				
@@ -96,6 +101,7 @@
 			},
 			submit() {
 				let data = new FormData();
+				data.append('site_id', this.post.site_id);
 				data.append('title', this.post.title);
 				data.append('content', this.post.content);
 				data.append('_method', this.$config.api._editImage(this.slug).method);
@@ -107,12 +113,12 @@
 	                }
 				})
 				.then ((res) => {
+					this.editProject({slug: this.slug, project: res.data.data})
 					flash("Project saved succesfuly", "success");
 					this.$router.push({name: 'adminEditPost', params: {slug: res.data.data.slug}});
 				})
 				.catch((err) => {
-					flash("An unknown error occured, please try again later", "error");
-					console.log(err)
+					flash("This project can not be updated as it is, may be it has the same title as an other one?", "error");
 				});
 			},
 			onEditorUpdate(value) {

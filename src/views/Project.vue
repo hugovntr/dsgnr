@@ -1,10 +1,10 @@
 <template>
-	<div id="project" @keyup.esc="console.log('left')">
+	<div id="project">
 		<div class="container-fluid">
 			<Topbar :isAuthor="false" name="Hugo" date="13/12/2019"/>
 			<div class="row px-3 px-sm-0">
 				<div class="d-none d-sm-flex col-1 justify-content-center">
-					<router-link v-if="controls.prev.status" :to="'/project/' + controls.prev.slug" class="item prev control">
+					<router-link v-if="controls.prev.status" :to="{name: 'project', params: {slug: controls.prev.slug}}" class="item prev control">
 						<div>Previous — <span class="highlight">{{controls.prev.title}}</span></div>
 					</router-link>
 				</div>
@@ -22,18 +22,17 @@
 				</div>
 				<div class="d-none d-sm-flex col-1 justify-content-center">
 					<router-link v-if="controls.next.status" 
-					:to="'/project/' + controls.next.slug" class="item next control">
+					:to="{name: 'project', params: {slug: controls.next.slug}}" class="item next control">
 						<div>Next — <span class="highlight">{{controls.next.title}}</span></div>
 					</router-link>
 				</div>
 			</div>
 
 			<div class="d-flex d-sm-none justify-content-around py-3">
-				<router-link v-if="controls.prev.status" :to="'/project/' + controls.prev.slug" class="control">
+				<router-link v-if="controls.prev.status" :to="{name: 'project', params: {slug: controls.prev.slug}}" class="control">
 					<div><span class="highlight">←</span> Previous</div>
 				</router-link>
-				<router-link v-if="controls.next.status" 
-					:to="'/project/' + controls.next.slug" class="control">
+				<router-link v-if="controls.next.status" :to="{name: 'project', params: {slug: controls.next.slug}}" class="control">
 					<div>Next <span class="highlight">→</span></div>
 				</router-link>
 			</div>
@@ -45,6 +44,7 @@
 <script>
 	import Topbar from '@/components/Topbar';
 	import DSGNRImage from '@/components/assets/Image'
+	import { mapGetters } from 'vuex';
 
 	export default {
 		name: 'Project',
@@ -55,94 +55,62 @@
 		watch: {
 			'$route'(to, from) {
 				this.slug = to.params.slug;
-				this.controls.next.id = Number(to.params.id) + 1;
-				this.controls.prev.id = Number(to.params.id) - 1;
-				this.getProject();
-				this.getSlugList();
+				this.validateProject();
 			}
 		},
 		data() {
 			return {
 				slug: this.$route.params.slug,
-				slugList: [],
 				controls: {
 					next: {
-						id: Number(this.$route.params.id) + 1,
 						slug: null,
-						status: true,
+						status: false,
 						title: null
 					},
 					prev: {
-						id: Number(this.$route.params.id) - 1,
 						slug: null,
-						status: true,
+						status: false,
 						title: null
 					}
 				},
 				project: []
 			}
 		},
+		computed: {
+			...mapGetters('user', {
+				projectBySlug: 'projectBySlug',
+				projectById: 'projectById',
+				projects: 'projects',
+			})
+		},
 		methods: {
-			getProject() {
-				this.$http.get(this.$config.api._getImage(this.slug).url)
-				.then(res => {
-					this.project = res.data.data;
-				})
-				.catch(err => {
-					console.log('Request failed', err)
-					flash("An error occured while retreiving project informations", "error");
-				});
-			},
-			getSlugList() {
-				this.$http.get(this.$config.api._getSlugs.url)
-				.then(res => {
-					this.slugList = res.data;
-					this.controls.next.slug = this.slugList[this.slugList.indexOf(this.slug) + 1];
-					this.controls.prev.slug = this.slugList[this.slugList.indexOf(this.slug) - 1];
-
-					this.checkControls();
-				})
-				.catch(err => console.log('Slug List Request Failed', err));
-			},
-			checkProject(_slug, _ctrl) {
-				fetch(this.$config.api._getImage(_slug).url)
-				.then(res => {
-					if (_ctrl === "next")
-						this.controls.next.status = res.ok;
-					else
-						this.controls.prev.status = res.ok;
-
-					if (res.status === 404) {
-						throw new Error(res.statusText);
+			validateProject() {
+				if (this.projectBySlug(this.slug)) {
+					this.project = this.projectBySlug(this.slug);
+					let prev = this.projectById(this.project.id - 1),
+						next = this.projectById(this.project.id + 1);
+	
+					this.controls = {
+						prev: {
+							slug: (prev) ? prev.slug : null,
+							title: (prev) ? prev.title : null,
+							status: (prev) ? true : false,
+						},
+						next: {
+							slug: (next) ? next.slug : null,
+							title: (next) ? next.title : null,
+							status: (next) ? true : false,
+						}
 					}
+				}
+				else {
+					this.$router.back();
+				}
 
-					return res.json();
-				})
-				.then(res => {
-					if (_ctrl === "next" && this.controls.next.status) {
-						this.controls.next.title = res.data.title;
-						this.controls.next.slug = res.data.slug;
-					}
-					if (_ctrl === "prev" && this.controls.prev.status) {
-						this.controls.prev.title = res.data.title;
-						this.controls.prev.slug = res.data.slug;
-					}
-				})
-				.catch(err => console.log('Request failed:', err));
 			},
-			checkControls()
-			{
-				this.checkProject(this.controls.next.slug, "next");
-				this.checkProject(this.controls.prev.slug, "prev");
-			}
 		},
 		mounted() {
-			this.$http.get(this.$config.api._getImage(this.slug).url)
-			.then(res => {
-				this.project = res.data.data;
-			})
-			.catch(err => console.log('Request failed', err));
-			this.getSlugList();
+			this.validateProject();
 
 			document.onkeydown = evt => {
 		      evt = evt || window.event;
@@ -162,8 +130,6 @@
 </script>
 
 <style scoped lang="scss">
-.content {
-}
 .item {
 	position: fixed;
 	top: 50%;

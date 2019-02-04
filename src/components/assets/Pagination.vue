@@ -16,7 +16,7 @@
             <li class="pl-3 medium-font-weight" v-if="!controls">Page {{pagination.current_page}}</li>
         </ul>
         <div class="stats xs-font-size medium-color">
-            From {{from}} to {{to}} — {{pagination.per_page}} items
+            From {{from}} to {{pagination.projects_count}} — {{pagination.per_page}} items
         </div>
     </div>
 </template>
@@ -29,6 +29,7 @@ export default {
             current_page: {type: Number, default: 1},
             pages_count: {type: Number, default: 1},
             per_page: {type: Number, default: 1},
+            projects_count: {type: Number, default: 1},
         },
         controls: {type: Boolean, default: false},
         name: {type: String, default: ""}
@@ -37,24 +38,14 @@ export default {
         from() {
             return this.pagination.per_page * (this.pagination.current_page - 1) + 1;
         },
-        to() {
-            return this.from + this.pagination.per_page - 1;
-        }
     },
     watch: {
         pagination(to, from) {
             this.pagination.current_page = (to.current_page <= to.pages_count) ? to.current_page : to.pages_count;
             this.pagination.pages_count = to.pages_count;
             this.pagination.per_page = to.per_page;
+            this.pagination.projects_count = to.projects_count;
         }
     },
-    data() {
-        return {
-
-        }
-    },
-    mounted() {
-        // console.log(this.pagination);
-    }
 }
 </script>
